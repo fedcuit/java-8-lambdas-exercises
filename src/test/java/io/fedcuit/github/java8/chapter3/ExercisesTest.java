@@ -60,4 +60,11 @@ public class ExercisesTest {
         assertThat(wordWithMostLowercase.isPresent()).isTrue();
         assertThat(wordWithMostLowercase.get()).isEqualTo("integration");
     }
+
+    @Test
+    public void shouldReturnEmptyForEmptyStringList() {
+        Optional<String> word = exercises.withMostLowerCase(asList());
+
+        assertThat(word.isPresent()).isFalse();
+    }
 }

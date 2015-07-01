@@ -3,7 +3,6 @@ package io.fedcuit.github.java8.chapter3;
 import io.fedcuit.github.java8.domain.Album;
 import io.fedcuit.github.java8.domain.Artist;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -20,7 +19,6 @@ public class Exercises {
         return albums.stream().filter(album -> album.getTrackList().count() <= 3).collect(toList());
     }
 
-
     // The below two methods demonstrate three ways using method reference to simplify lambda expression
     // 1. Type::instanceMethod 2. Type::new 2. Type::staticMethod
 
@@ -33,9 +31,6 @@ public class Exercises {
     }
 
     public Optional<String> withMostLowerCase(List<String> words) {
-        if (words == null || words.isEmpty()) {
-            return Optional.empty();
-        }
         return words.stream().max(comparing(this::countLowercase));
     }
 
