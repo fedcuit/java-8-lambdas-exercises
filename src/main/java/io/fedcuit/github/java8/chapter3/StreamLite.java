@@ -27,7 +27,7 @@ public class StreamLite {
             }
             return newAcc;
         }, (List<I> left, List<I> right) -> {
-            List<I> newLeft = new ArrayList<I>(left);
+            List<I> newLeft = new ArrayList<>(left);
             newLeft.addAll(right);
             return newLeft;
         });

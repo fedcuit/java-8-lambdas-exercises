@@ -1,8 +1,8 @@
 package io.fedcuit.github.java8.chapter3;
 
+import io.fedcuit.github.java8.TestFixture;
 import io.fedcuit.github.java8.domain.Album;
 import io.fedcuit.github.java8.domain.Artist;
-import io.fedcuit.github.java8.domain.Track;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,23 +28,16 @@ public class ExercisesTest {
 
     @Test
     public void shouldCollectArtistNamesAndNationalities() {
-        Artist artist = new Artist("Jay", "China", asList());
-        Artist artist1 = new Artist("Jay2", "Taiwan", asList());
-        Artist artist2 = new Artist("Jay3", "HongKong", asList());
-
-        List<Artist> artists = asList(artist, artist1, artist2);
+        List<Artist> artists = TestFixture.getArtists();
 
         assertThat(exercises.collectArtistInfos(artists)).isEqualTo(asList("Jay China", "Jay2 Taiwan", "Jay3 HongKong"));
     }
 
     @Test
     public void shouldFindAlbumThatHasThreeTracksAtMost() {
-        Album album = new Album(asList(new Track(62, "don't go"), new Track(30, "ending")));
-        Album album1 = new Album(asList(new Track(40, "my sunshine"), new Track(82, "super start"), new Track(22, "because of you")));
-        Album album2 = new Album(asList(new Track(40, "my sunshine"), new Track(82, "super start"), new Track(41, "safe and sound"), new Track(22, "yesterday once more")));
-        List<Album> albums = asList(album, album1, album2);
+        List<Album> albums = TestFixture.getAlbums();
 
-        assertThat(exercises.albumWhichMaximum3Tracks(albums)).isEqualTo(asList(album, album1));
+        assertThat(exercises.albumWhichMaximum3Tracks(albums)).isEqualTo(asList(albums.get(0), albums.get(1)));
     }
 
     @Test
