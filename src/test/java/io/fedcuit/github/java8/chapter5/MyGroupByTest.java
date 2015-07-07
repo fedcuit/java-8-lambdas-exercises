@@ -45,4 +45,15 @@ public class MyGroupByTest {
         assertThat(companiesByLevel.get("Lvl2")).contains("Lvl2 MS");
         assertThat(companiesByLevel.get("Lvl3")).contains("Lvl3 Yahoo");
     }
+
+    @Test
+    public void shouldGroupDataByReduceAndMethodFromAClass() throws Exception {
+        MyGrouper myGrouper = companies.reduce(new MyGrouper(), MyGrouper::add, MyGrouper::merge);
+
+        Map<String, List<String>> companiesByLevel = myGrouper.getMap();
+
+        assertThat(companiesByLevel.get("Lvl1")).contains("Lvl1 Google", "Lvl1 Apple");
+        assertThat(companiesByLevel.get("Lvl2")).contains("Lvl2 MS");
+        assertThat(companiesByLevel.get("Lvl3")).contains("Lvl3 Yahoo");
+    }
 }
