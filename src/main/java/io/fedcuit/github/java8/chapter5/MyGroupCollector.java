@@ -10,31 +10,31 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-public class MyGroupCollector<T> implements Collector<T, MyGrouper<T>, Map<T, List<T>>> {
+public class MyGroupCollector<T, K> implements Collector<T, MyGrouper<T, K>, Map<K, List<T>>> {
 
-    private final Function<T, T> classifier;
+    private final Function<T, K> classifier;
 
-    public MyGroupCollector(Function<T, T> classifier) {
+    public MyGroupCollector(Function<T, K> classifier) {
         this.classifier = classifier;
     }
 
     @Override
-    public Supplier<MyGrouper<T>> supplier() {
+    public Supplier<MyGrouper<T, K>> supplier() {
         return () -> new MyGrouper<>(classifier);
     }
 
     @Override
-    public BiConsumer<MyGrouper<T>, T> accumulator() {
+    public BiConsumer<MyGrouper<T, K>, T> accumulator() {
         return MyGrouper::add;
     }
 
     @Override
-    public BinaryOperator<MyGrouper<T>> combiner() {
+    public BinaryOperator<MyGrouper<T, K>> combiner() {
         return MyGrouper::merge;
     }
 
     @Override
-    public Function<MyGrouper<T>, Map<T, List<T>>> finisher() {
+    public Function<MyGrouper<T, K>, Map<K, List<T>>> finisher() {
         return MyGrouper::getMap;
     }
 

@@ -6,27 +6,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class MyGrouper<T> {
-    private final Map<T, List<T>> map;
-    private final Function<T, T> classifier;
+public class MyGrouper<T, K> {
+    private final Map<K, List<T>> map;
+    private final Function<T, K> classifier;
 
-    public MyGrouper(Function<T, T> classifier) {
+    public MyGrouper(Function<T, K> classifier) {
         this.classifier = classifier;
         map = new HashMap<>();
     }
 
-    public MyGrouper<T> add(T x) {
+    public MyGrouper<T, K> add(T x) {
         List<T> group = map.computeIfAbsent(classifier.apply(x), __ -> new ArrayList<>());
         group.add(x);
         return this;
     }
 
-    public MyGrouper<T> merge(MyGrouper other) {
+    public MyGrouper<T, K> merge(MyGrouper other) {
         map.putAll(other.getMap());
         return this;
     }
 
-    public Map<T, List<T>> getMap() {
+    public Map<K, List<T>> getMap() {
         return map;
     }
 }

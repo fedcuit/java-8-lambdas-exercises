@@ -48,7 +48,7 @@ public class MyGroupByTest {
 
     @Test
     public void shouldGroupDataByReduceAndMethodFromAClass() throws Exception {
-        MyGrouper myGrouper = companies.reduce(new MyGrouper<String>(x -> x.substring(0, 4)), MyGrouper::add, MyGrouper::merge);
+        MyGrouper myGrouper = companies.reduce(new MyGrouper<String, String>(x -> x.substring(0, 4)), MyGrouper::add, MyGrouper::merge);
 
         Map<String, List<String>> companiesByLevel = myGrouper.getMap();
 
@@ -64,5 +64,14 @@ public class MyGroupByTest {
         assertThat(companiesByLevel.get("Lvl1")).contains("Lvl1 Google", "Lvl1 Apple");
         assertThat(companiesByLevel.get("Lvl2")).contains("Lvl2 MS");
         assertThat(companiesByLevel.get("Lvl3")).contains("Lvl3 Yahoo");
+    }
+
+    @Test
+    public void shouldGroupDataByCustomizedCollectorWithDifferentKeyType() throws Exception {
+        Map<Integer, List<String>> companiesByLevel = companies.collect(new MyGroupCollector<>(x -> Integer.valueOf(x.substring(3, 4))));
+
+        assertThat(companiesByLevel.get(1)).contains("Lvl1 Google", "Lvl1 Apple");
+        assertThat(companiesByLevel.get(2)).contains("Lvl2 MS");
+        assertThat(companiesByLevel.get(3)).contains("Lvl3 Yahoo");
     }
 }
