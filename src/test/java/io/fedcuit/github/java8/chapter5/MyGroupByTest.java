@@ -48,7 +48,7 @@ public class MyGroupByTest {
 
     @Test
     public void shouldGroupDataByReduceAndMethodFromAClass() throws Exception {
-        MyGrouper myGrouper = companies.reduce(new MyGrouper(), MyGrouper::add, MyGrouper::merge);
+        MyGrouper myGrouper = companies.reduce(new MyGrouper<String>(x -> x.substring(0, 4)), MyGrouper::add, MyGrouper::merge);
 
         Map<String, List<String>> companiesByLevel = myGrouper.getMap();
 

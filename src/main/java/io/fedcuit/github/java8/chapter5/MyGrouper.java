@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
-public class MyGrouper {
-    private final Map<String, List<String>> map;
+public class MyGrouper<T> {
+    private final Map<T, List<T>> map;
+    private final Function<T, T> classifier;
 
-    public MyGrouper() {
+    public MyGrouper(Function<T, T> classifier) {
+        this.classifier = classifier;
         map = new HashMap<>();
     }
 
-    public MyGrouper add(String x) {
-        String classifier = x.substring(0, 4);
-        List<String> group = map.computeIfAbsent(classifier, __ -> new ArrayList<>());
+    public MyGrouper add(T x) {
+        List<T> group = map.computeIfAbsent(classifier.apply(x), __ -> new ArrayList<>());
         group.add(x);
         return this;
     }
@@ -24,7 +26,7 @@ public class MyGrouper {
         return this;
     }
 
-    public Map<String, List<String>> getMap() {
+    public Map<T, List<T>> getMap() {
         return map;
     }
 }
