@@ -15,13 +15,13 @@ public class MyGrouper<T> {
         map = new HashMap<>();
     }
 
-    public MyGrouper add(T x) {
+    public MyGrouper<T> add(T x) {
         List<T> group = map.computeIfAbsent(classifier.apply(x), __ -> new ArrayList<>());
         group.add(x);
         return this;
     }
 
-    public MyGrouper merge(MyGrouper other) {
+    public MyGrouper<T> merge(MyGrouper other) {
         map.putAll(other.getMap());
         return this;
     }

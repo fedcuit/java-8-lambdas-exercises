@@ -56,4 +56,13 @@ public class MyGroupByTest {
         assertThat(companiesByLevel.get("Lvl2")).contains("Lvl2 MS");
         assertThat(companiesByLevel.get("Lvl3")).contains("Lvl3 Yahoo");
     }
+
+    @Test
+    public void shouldGroupDataByCustomizedCollector() throws Exception {
+        Map<String, List<String>> companiesByLevel = companies.collect(new MyGroupCollector<>(x -> x.substring(0, 4)));
+
+        assertThat(companiesByLevel.get("Lvl1")).contains("Lvl1 Google", "Lvl1 Apple");
+        assertThat(companiesByLevel.get("Lvl2")).contains("Lvl2 MS");
+        assertThat(companiesByLevel.get("Lvl3")).contains("Lvl3 Yahoo");
+    }
 }
